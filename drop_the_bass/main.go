@@ -19,7 +19,7 @@ func check(e error) {
 func dictLookup(word string) bool {
 	var dictLocation string
 	if runtime.GOOS == "darwin" {
-    dictLocation = "american-english"
+		dictLocation = "american-english"
 	} else {
 		dictLocation = "/usr/share/dict/american-english"
 	}
@@ -77,7 +77,7 @@ func main() {
 				line = decode(line)
 			}
 			fmt.Println(line)
-      wg.Done()
+			wg.Done()
 		}()
 		wg.Wait()
 	}
