@@ -69,7 +69,6 @@ func main() {
 
 		wg.Add(1)
 		go func() {
-			fmt.Println("Started new goroutine...")
 			// decode the current line
 			line = decode(scanner.Text())
 
