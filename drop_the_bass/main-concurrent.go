@@ -50,45 +50,6 @@ func decode(src string) string {
 	return string(data)
 }
 
-func decryptWords(strInput string) {
-  file := strings.NewReader(strInput)
-
-  // do I need buffered channels here?
-  jobs := make(chan string)
-  results := make(chan string)
-
-  // I think we need a wait group, not sure.
-  wg := new(sync.WaitGroup)
-
-  // start up some workers that will block and wait?
-  for w := 1; w <= 5; w++ {
-    wg.Add(1)
-    go matchTelephoneNumbers(jobs, results, wg)
-  }
-
-  // Go over a file line by line and queue up a ton of work
-  go func() {
-    scanner := bufio.NewScanner(file)
-    for scanner.Scan() {
-      // Later I want to create a buffer of lines, not just line-by-line here ...
-      jobs <- scanner.Text()
-    }
-    close(jobs)
-  }()
-
-  // Now collect all the results...
-  // But first, make sure we close the result channel when everything was processed
-  go func() {
-    wg.Wait()
-    close(results)
-  }()
-
-  // Add up the results from the results channel.
-  for v := range results {
-    fmt.Println(v)
-  }
-}
-
 func matchTelephoneNumbers(jobs <-chan string, results chan<- string, wg *sync.WaitGroup) {
   // Decreasing internal counter for wait-group as soon as goroutine finishes
   defer wg.Done()
@@ -124,33 +85,31 @@ func main() {
   jobs := make(chan string)
   results := make(chan string)
 
-  // I think we need a wait group, not sure.
+  // global waitgroup
   wg := new(sync.WaitGroup)
 
-  // start up some workers that will block and wait?
+  // start up some workers that will block and wait
   for w := 1; w <= 5; w++ {
     wg.Add(1)
     go matchTelephoneNumbers(jobs, results, wg)
   }
 
-  // Go over a file line by line and queue up a ton of work
+  // Go over a file line by line and queue them up
   go func() {
     scanner := bufio.NewScanner(file)
     for scanner.Scan() {
-      // Later I want to create a buffer of lines, not just line-by-line here ...
       jobs <- scanner.Text()
     }
     close(jobs)
   }()
 
   // Now collect all the results...
-  // But first, make sure we close the result channel when everything was processed
   go func() {
     wg.Wait()
     close(results)
   }()
 
-  // Add up the results from the results channel.
+  // Print out the results from the results channel.
   for v := range results {
     fmt.Println(v)
   }
