@@ -10,6 +10,7 @@ import (
   "sync"
   "os/exec"
   "encoding/base64"
+  "time"
 )
 
 // error handling function
@@ -56,13 +57,15 @@ func workerFunc(jobs <-chan string, results chan<- string, wg *sync.WaitGroup) {
 
   // eventually I want to have a []string channel to work on a chunk of lines not just one line of text
   for j := range jobs {
+    start := time.Now()
     line := decode(j)
 
     // test and further decode until valid work is found
     for !(dictLookup(line)) {
       line = decode(line)
     }
-    results <- line
+    elapsed := time.Since(start)
+    results <- fmt.Sprintf("%s \t%s", line, elapsed)
   }
 }
 
