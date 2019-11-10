@@ -2,32 +2,41 @@ package main
 
 import "fmt"
 import "os"
+
 //import "io/ioutil"
 import "bufio"
 import "encoding/base64"
 import "log"
 import "os/exec"
 
+func testWord(word string) bool {
+	_, err := exec.Command("grep", "-w", word, "/usr/share/dict/american-english").Output()
+	if err != nil {
+		return false
+	}
+	return true
+}
+
 func check(e error) {
-    if e != nil {
-        panic(e)
-    }
+	if e != nil {
+		panic(e)
+	}
 }
 
 func decode(src string) string {
-  strToDecode := src
-  var data []byte
+	strToDecode := src
+	var data []byte
 	//fmt.Printf("\ndecoding: %s\n", strToDecode)
-  data, err := base64.StdEncoding.DecodeString(strToDecode)
-  for {
-    if err != nil {
-  		//fmt.Println("error:", err)
-  		strToDecode += "="
-  	} else {
-      break
-    }
-    data, err = base64.StdEncoding.DecodeString(strToDecode)
-  }
+	data, err := base64.StdEncoding.DecodeString(strToDecode)
+	for {
+		if err != nil {
+			//fmt.Println("error:", err)
+			strToDecode += "="
+		} else {
+			break
+		}
+		data, err = base64.StdEncoding.DecodeString(strToDecode)
+	}
 
 	//fmt.Printf("decoded:  %s\n\n", string(data))
 	//dst :=  fmt.Sprintf("%s\n", data)
@@ -57,11 +66,11 @@ func search(toSearch string) bool {
 	must(ls.Run())
 
 	// Wait for the grep command to finish.
-  err = grep.Wait()
-  if err != nil {
-    return false
-  }
-  return true
+	err = grep.Wait()
+	if err != nil {
+		return false
+	}
+	return true
 }
 
 // Must checks if an error is nil and if it isn't calls log.Fatalln(err)
@@ -72,41 +81,26 @@ func must(err error) {
 }
 
 func main() {
-  //line := ""
-  var d string
-  //line1 := ""
-  if (len(os.Args)-1) == 1 {
-	    file, err := os.Open(os.Args[1:][0])
-	    check(err)
+	var d string
+	if (len(os.Args) - 1) == 1 {
+		file, err := os.Open(os.Args[1:][0])
+		check(err)
+		scanner := bufio.NewScanner(file)
 
-    	scanner := bufio.NewScanner(file)
-
-      for scanner.Scan() {
-    		line := scanner.Text()
-        d = decode(line)
-        verdict := search(d)
-        for verdict == false {
-          d = decode(d)
-          verdict := search(d)
-          if verdict == true {
-            break
-          }
-        }
-        fmt.Println(d)
-      }
-
-
-
-    	//line = decode(line)
-    	//line = decode(line)
-    	//line = decode(line)
-    	//line = decode(line)
-    	//line = decode(line)
-    	//verdict := search(decode(line))
-
-    	//fmt.Printf("\nfinal: %v\n",verdict)
-
-  } else {
-      fmt.Println("ERROR")
-  }
+    for scanner.Scan() {
+			line := scanner.Text()
+			d = decode(line)
+			verdict := search(d)
+			for verdict == false {
+				d = decode(d)
+				verdict := search(d)
+				if verdict == true {
+					break
+				}
+			}
+			fmt.Println(d)
+		}
+	} else {
+		fmt.Println("ERROR")
+	}
 }

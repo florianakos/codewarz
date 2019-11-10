@@ -1,0 +1,3 @@
+## Drop the bass challenge
+
+The task is to read an input file line by line and try to decipher the english word which is hidden behind each line. Encoding may have been applied multiple times...
