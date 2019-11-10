@@ -50,7 +50,7 @@ func decode(src string) string {
 	return string(data)
 }
 
-func matchTelephoneNumbers(jobs <-chan string, results chan<- string, wg *sync.WaitGroup) {
+func workerFunc(jobs <-chan string, results chan<- string, wg *sync.WaitGroup) {
   // Decreasing internal counter for wait-group as soon as goroutine finishes
   defer wg.Done()
 
@@ -91,7 +91,7 @@ func main() {
   // start up some workers that will block and wait
   for w := 1; w <= 5; w++ {
     wg.Add(1)
-    go matchTelephoneNumbers(jobs, results, wg)
+    go workerFunc(jobs, results, wg)
   }
 
   // Go over a file line by line and queue them up
