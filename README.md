@@ -1,0 +1,3 @@
+## Codewarz repo
+
+This repo contains some random programming exercises which I did on the codewarz / runcode platform. See individual folders for more info...
