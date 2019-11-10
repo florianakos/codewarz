@@ -5,6 +5,7 @@ import "os"
 import "os/exec"
 import "bufio"
 import "encoding/base64"
+import "runtime"
 
 func check(e error) {
 	if e != nil {
@@ -13,7 +14,13 @@ func check(e error) {
 }
 
 func dictLookup(word string) bool {
-	_, err := exec.Command("grep", "-w", word, "/usr/share/dict/american-english").Output()
+	var dictLocation string
+	if runtime.GOOS == "darwin" {
+    dictLocation = "american-english"
+	} else {
+		dictLocation = "/usr/share/dict/american-english"
+	}
+	_, err := exec.Command("grep", "-w", word, dictLocation).Output()
 	if err != nil {
 		return false
 	}
