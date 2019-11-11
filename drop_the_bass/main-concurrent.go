@@ -81,6 +81,7 @@ func main() {
 	check(err)
 
 	input, err := ioutil.ReadAll(f)
+	check(err)
 
 	file := strings.NewReader(string(input))
 
