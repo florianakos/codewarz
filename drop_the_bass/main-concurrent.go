@@ -13,6 +13,9 @@ import (
 	"time"
 )
 
+// global dict holding the contents of the dictionary file
+var wordDict = make(map[string]bool)
+
 // error handling function
 func check(e error) {
 	if e != nil {
@@ -20,15 +23,45 @@ func check(e error) {
 	}
 }
 
+// func that loads the dict into memory
+func loadDictionary() {
+	var dictLoc string
+	// if running on MacOS then use local dict in repository folder
+	if runtime.GOOS == "darwin" {
+		dictLoc = "american-english"
+	// else use the Unix default dict 
+	} else {
+		dictLoc = "/usr/share/dict/american-english"
+	}
+	// open the determined file location
+	dict, err := os.Open(dictLoc)
+	check(err)
+	defer dict.Close()
+	// read it via bufio scanner
+  ds := bufio.NewScanner(dict)
+	for ds.Scan() {
+		// import lines of dict into string map
+		wordDict[ds.Text()] = true
+	}
+}
+
+// new version of dict lookup via direct access to string map storing each line
+func dictLookupFast(word string) bool {
+	if _, ok := wordDict[word]; ok {
+	    return true
+	}
+	return false
+}
+
 // helper func to look up a given string in dictionary (location depends on OS)
 func dictLookup(word string) bool {
-	var dictLocation string
+	var dictLoc string
 	if runtime.GOOS == "darwin" {
-		dictLocation = "american-english"
+		dictLoc = "american-english"
 	} else {
-		dictLocation = "/usr/share/dict/american-english"
+		dictLoc = "/usr/share/dict/american-english"
 	}
-	_, err := exec.Command("grep", "-w", word, dictLocation).Output()
+	_, err := exec.Command("grep", "-w", word, dictLoc).Output()
 	if err != nil {
 		return false
 	}
@@ -61,7 +94,7 @@ func workerFunc(jobs <-chan string, results chan<- string, wg *sync.WaitGroup) {
 		line := decode(j)
 
 		// test and further decode until valid work is found
-		for !(dictLookup(line)) {
+		for !(dictLookupFast(line)) {
 			line = decode(line)
 		}
 		elapsed := time.Since(start)
@@ -75,6 +108,9 @@ func main() {
 		fmt.Println("ERROR: missing argument!")
 		os.Exit(1)
 	}
+
+	// load OS specific dictionary into memory for fast execution
+  loadDictionary()
 
 	// open file for reading
 	f, err := os.Open(os.Args[1:][0])
