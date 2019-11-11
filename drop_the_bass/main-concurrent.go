@@ -29,7 +29,7 @@ func loadDictionary() {
 	// if running on MacOS then use local dict in repository folder
 	if runtime.GOOS == "darwin" {
 		dictLoc = "american-english"
-	// else use the Unix default dict 
+		// else use the Unix default dict
 	} else {
 		dictLoc = "/usr/share/dict/american-english"
 	}
@@ -38,7 +38,7 @@ func loadDictionary() {
 	check(err)
 	defer dict.Close()
 	// read it via bufio scanner
-  ds := bufio.NewScanner(dict)
+	ds := bufio.NewScanner(dict)
 	for ds.Scan() {
 		// import lines of dict into string map
 		wordDict[ds.Text()] = true
@@ -48,7 +48,7 @@ func loadDictionary() {
 // new version of dict lookup via direct access to string map storing each line
 func dictLookupFast(word string) bool {
 	if _, ok := wordDict[word]; ok {
-	    return true
+		return true
 	}
 	return false
 }
@@ -110,7 +110,7 @@ func main() {
 	}
 
 	// load OS specific dictionary into memory for fast execution
-  loadDictionary()
+	loadDictionary()
 
 	// open file for reading
 	f, err := os.Open(os.Args[1:][0])
