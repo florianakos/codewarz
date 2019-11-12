@@ -29,7 +29,7 @@ func dictLookup(word string) bool {
 	return true
 }
 
-// helper func to decode a base64 encoded string (append necessary = at end to make it valid...)
+// helper function to decode a base64 encoded string (append necessary = at end to make it valid...)
 func decode(src string) string {
 	data, err := base64.StdEncoding.DecodeString(src)
 	if err != nil {
