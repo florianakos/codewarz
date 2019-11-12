@@ -28,9 +28,9 @@ func main() {
 
 	// extract first word of each sentence, plus clean from whitespace.
 	for _, v := range sentences {
-		word := strings.Split(strings.TrimSpace(v), " ")[0]
-		if word != "" {
-			fmt.Printf("%s ", word)
+		firstWord := strings.Split(strings.TrimSpace(v), " ")[0]
+		if firstWord != "" {
+			fmt.Printf("%s ", firstWord)
 		}
 	}
 }
