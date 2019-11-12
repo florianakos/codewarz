@@ -6,7 +6,6 @@ import "os/exec"
 import "bufio"
 import "encoding/base64"
 import "runtime"
-import "sync"
 
 // error handling function
 func check(e error) {
@@ -47,9 +46,6 @@ func decode(src string) string {
 }
 
 func main() {
-	// global variable to enable concurrency
-	var wg sync.WaitGroup
-
 	// check if filename in arg is present
 	if (len(os.Args) - 1) != 1 {
 		fmt.Println("ERROR: missing argument!")
@@ -66,19 +62,13 @@ func main() {
 
 	// loop over lines until they exist
 	for scanner.Scan() {
+		// decode the current line
+		line = decode(scanner.Text())
 
-		wg.Add(1)
-		go func() {
-			// decode the current line
-			line = decode(scanner.Text())
-
-			// test and further decode until valid work is found
-			for !(dictLookup(line)) {
-				line = decode(line)
-			}
-			fmt.Println(line)
-			wg.Done()
-		}()
-		wg.Wait()
+		// test and further decode until valid work is found
+		for !(dictLookup(line)) {
+			line = decode(line)
+		}
+		fmt.Println(line)
 	}
 }
