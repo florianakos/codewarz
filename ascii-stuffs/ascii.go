@@ -2,10 +2,10 @@ package main
 
 import (
 	"bufio"
+	"encoding/hex"
 	"fmt"
 	"os"
 	"strings"
-  "encoding/hex"
 )
 
 // error handling function
@@ -19,13 +19,13 @@ func check(e error) {
 func decodeChar(ch string) string {
 	decoded, err := hex.DecodeString(ch)
 	if err != nil {
-    return ""
+		return ""
 	}
 	return fmt.Sprintf("%s", decoded)
 }
 
 func main() {
-  // check if filename in arg is present
+	// check if filename in arg is present
 	if (len(os.Args) - 1) != 1 {
 		fmt.Println("ERROR: missing argument!")
 		os.Exit(1)
@@ -37,10 +37,10 @@ func main() {
 
 	// read it for scanning line by line
 	scanner := bufio.NewScanner(file)
-  for scanner.Scan() {
-    chars := strings.Split(strings.TrimSpace(scanner.Text()), " ")
-    for _, val := range chars {
-      fmt.Print(decodeChar(val))
-    }
-  }
+	for scanner.Scan() {
+		chars := strings.Split(strings.TrimSpace(scanner.Text()), " ")
+		for _, val := range chars {
+			fmt.Print(decodeChar(val))
+		}
+	}
 }
