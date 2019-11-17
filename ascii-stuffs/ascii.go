@@ -15,7 +15,7 @@ func check(e error) {
 	}
 }
 
-// funciton that turns hex string into normal string (1 character)
+// function that turns hex string into normal string (1 character)
 func decodeChar(ch string) string {
 	decoded, err := hex.DecodeString(ch)
 	if err != nil {
