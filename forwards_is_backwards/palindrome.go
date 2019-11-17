@@ -2,10 +2,10 @@ package main
 
 import (
 	"bufio"
-	_"encoding/hex"
+	_ "encoding/hex"
 	"fmt"
 	"os"
-	_"strings"
+	_ "strings"
 )
 
 // error handling function
@@ -17,11 +17,11 @@ func check(e error) {
 
 // function that reverses a string
 func backwards(input string) string {
-  var tempStr string
-  for i := len(input)-1; i > -1; i-- {
-    tempStr += string(input[i])
-  }
-  return tempStr
+	var tempStr string
+	for i := len(input) - 1; i > -1; i-- {
+		tempStr += string(input[i])
+	}
+	return tempStr
 }
 
 func main() {
@@ -38,11 +38,11 @@ func main() {
 	// read it for scanning line by line
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-    forwardTxt := scanner.Text()
-    if forwardTxt == backwards(forwardTxt) {
-      fmt.Println("True")
-    } else {
-      fmt.Println("False")
-    }
+		forwardTxt := scanner.Text()
+		if forwardTxt == backwards(forwardTxt) {
+			fmt.Println("True")
+		} else {
+			fmt.Println("False")
+		}
 	}
 }
