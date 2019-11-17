@@ -2,10 +2,8 @@ package main
 
 import (
 	"bufio"
-	_ "encoding/hex"
 	"fmt"
 	"os"
-	_ "strings"
 )
 
 // error handling function
