@@ -17,11 +17,11 @@ func check(e error) {
 }
 
 func convertHex(hx string) string {
-  str := strings.Split(hx, "x")[1]
-  // deal with error: encoding/hex: odd length hex string
-  if len(str) == 1 {
-    str = "0" + str
-  }
+	str := strings.Split(hx, "x")[1]
+	// deal with error: encoding/hex: odd length hex string
+	if len(str) == 1 {
+		str = "0" + str
+	}
 	bs, err := hex.DecodeString(str)
 	if err != nil {
 		fmt.Println(err)
@@ -60,8 +60,8 @@ func main() {
 	file, err := os.Open(os.Args[1:][0])
 	check(err)
 
-  //
-  var out strings.Builder
+	//
+	var out strings.Builder
 
 	// run scanner on input
 	scanner := bufio.NewScanner(file)
@@ -70,7 +70,7 @@ func main() {
 		// parse each token as either hex, binary, octal or decial
 		for _, v := range tokens {
 			if len(v) != 0 {
-        val := strings.TrimSpace(v)
+				val := strings.TrimSpace(v)
 				// token is hexadecimal string
 				if strings.Contains(val, "x") {
 					out.WriteString(fmt.Sprint(convertHex(val)))
@@ -88,5 +88,5 @@ func main() {
 			}
 		}
 	}
-  fmt.Print(out.String())
+	fmt.Print(out.String())
 }
