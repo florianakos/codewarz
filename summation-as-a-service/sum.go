@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"bufio"
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -16,7 +16,7 @@ func check(e error) {
 }
 
 func decodeLine(line string) string {
-  numbers := strings.Split(strings.TrimSpace(line), " ")
+	numbers := strings.Split(strings.TrimSpace(line), " ")
 
 	n1, err := strconv.Atoi(numbers[0])
 	check(err)
@@ -53,7 +53,7 @@ func main() {
 
 	scanner := bufio.NewScanner(file)
 
-  for scanner.Scan() {
-    fmt.Println(decodeLine(scanner.Text()))
-  }
+	for scanner.Scan() {
+		fmt.Println(decodeLine(scanner.Text()))
+	}
 }
