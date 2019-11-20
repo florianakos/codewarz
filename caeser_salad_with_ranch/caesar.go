@@ -71,8 +71,7 @@ func main() {
 			offset--
 		}
 		// reset offset for a new line
-		offset = -1
-		// print newlines until the last line is reached
+		offset--
 		if i != len(lines)-1 {
 			fmt.Println()
 		}
