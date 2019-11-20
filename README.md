@@ -1,4 +1,4 @@
-## Codewarz repo
+# Codewarz repo
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/florianakos/codewarz)](https://goreportcard.com/report/github.com/florianakos/codewarz)
 
