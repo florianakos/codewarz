@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-// error handling function
+// simple error handling function
 func check(e error) {
 	if e != nil {
 		panic(e)
