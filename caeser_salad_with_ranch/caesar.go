@@ -68,7 +68,7 @@ func main() {
 				}, w))
 			}
 			// decrease word offset for the caesar cipher
-			offset -= 1
+			offset--
 		}
 		// reset offset for a new line
 		offset = -1
