@@ -71,7 +71,7 @@ func dictLookup(word string) bool {
 // helper func to decode a base64 encoded string (append necessary = at end to make it valid...)
 func decode(encodedStr string) string {
 	decoded, err := base64.StdEncoding.DecodeString(encodedStr)
-	for  err != nil {
+	for err != nil {
 		encodedStr += "="
 		decoded, err = base64.StdEncoding.DecodeString(encodedStr)
 	}
