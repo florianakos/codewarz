@@ -9,10 +9,20 @@ $ cat /path/to/somefile.txt
 1 1
 2 2
 3 3
-4 4
-5 5
--1 -2
-.5 10
+a a
+b b
+c c
+1 a
+a 1
+-1 2
+2 -1
+1.1 2.3
+9.1
+9.a
+9.(
+9.)
+-9(
+0.1 0.2
 ```
 
 Expected output:
@@ -22,10 +32,10 @@ $ ./simple_addition_solve.py /path/to/somefile.txt
 2
 4
 6
-8
-10
--3
-10.5
+1
+1
+3.4
+0.3
 ```
 
 The `SHA1` of the output shall be:
@@ -36,7 +46,7 @@ cba88f9c5e215b1e28e65800ff2fd34ecb5f850a
 Proof:
 
 ```bash
-$ python adder.py input.txt | python -c "import sys,hashlib; print(hashlib.sha1(sys.stdin.read().strip()).hexdigest())"
+$ python stupid.py input.txt | python -c "import sys,hashlib; print(hashlib.sha1(sys.stdin.read().strip()).hexdigest())"
 
 cba88f9c5e215b1e28e65800ff2fd34ecb5f850a
 ```
