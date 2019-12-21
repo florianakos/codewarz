@@ -27,9 +27,9 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		elements := strings.Split(strings.TrimSpace(scanner.Text()), " ")
-    for _, val := range elements {
-      n, _ := strconv.Atoi(val)
-      fmt.Printf("%c", n)
-    }
+		for _, val := range elements {
+			n, _ := strconv.Atoi(val)
+			fmt.Printf("%c", n)
+		}
 	}
 }

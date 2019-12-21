@@ -29,8 +29,8 @@ func main() {
 		nums := strings.Split(strings.TrimSpace(scanner.Text()), " ")
 		var sum int64
 		for _, val := range nums {
-      i, err := strconv.ParseInt(strings.Split(val, "x")[1], 16, 64);
-			if  err == nil {
+			i, err := strconv.ParseInt(strings.Split(val, "x")[1], 16, 64)
+			if err == nil {
 				sum += i
 			}
 		}
