@@ -69,19 +69,13 @@ func dictLookup(word string) bool {
 }
 
 // helper func to decode a base64 encoded string (append necessary = at end to make it valid...)
-func decode(src string) string {
-	data, err := base64.StdEncoding.DecodeString(src)
-	if err != nil {
-		src2 := src + "="
-		data2, err2 := base64.StdEncoding.DecodeString(src2)
-		if err2 != nil {
-			src3 := src2 + "="
-			data3, _ := base64.StdEncoding.DecodeString(src3)
-			return string(data3)
-		}
-		return string(data2)
+func decode(encodedStr string) string {
+	decoded, err := base64.StdEncoding.DecodeString(encodedStr)
+	for err != nil {
+		encodedStr += "="
+		decoded, err = base64.StdEncoding.DecodeString(encodedStr)
 	}
-	return string(data)
+	return string(decoded)
 }
 
 func workerFunc(jobs <-chan string, results chan<- string, wg *sync.WaitGroup) {
