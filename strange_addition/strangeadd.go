@@ -27,11 +27,11 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		var counter, sum int
-		for _, e := range(strings.Split(strings.TrimSpace(scanner.Text()), " ")) {
+		for _, e := range strings.Split(strings.TrimSpace(scanner.Text()), " ") {
 			counter += 1
 			n, _ := strconv.Atoi(e)
 			sum += n
 		}
-		fmt.Printf("%d\n", counter + sum)
+		fmt.Printf("%d\n", counter+sum)
 	}
 }

@@ -27,7 +27,7 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		n, _ := strconv.Atoi(strings.TrimSpace(scanner.Text()))
-		if n % 2 == 0 {
+		if n%2 == 0 {
 			fmt.Printf("%d True\n", n)
 		} else {
 			fmt.Printf("%d False\n", n)
