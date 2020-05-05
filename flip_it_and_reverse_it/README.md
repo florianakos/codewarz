@@ -44,7 +44,7 @@ The `SHA1` of the output shall be:
 Proof:
 
 ```bash
-$ go run pcapper.go input.txt | python -c "import sys,hashlib; print(hashlib.sha1(sys.stdin.read().strip()).hexdigest())"
+$ python3 flip.py input.txt | python -c "import sys,hashlib; print(hashlib.sha1(sys.stdin.read().strip()).hexdigest())"
 
-2643d669feb38df4f151bc0f779defffd8d445fd
+050b6e4c4fb22d39bc92c267627267e10b4e4ec2
 ```
