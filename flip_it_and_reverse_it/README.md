@@ -1,4 +1,4 @@
-## Network_Awkwardness
+## FLIP_IT_AND_REVERSE_IT
 
 Given a file with several words (some lines contain multiple words and some lines only contain one word). Print the words, one per line and reverse every other word following the first word.
 
